@@ -1,16 +1,22 @@
+/* eslint-disable @next/next/no-img-element */
+
 export default function ProductCard({ product, isLiked, onLike }) {
   return (
     <article className="relative group">
-      {/* IMAGE */}
-      <div className="bg-gray-50 p-6">
+      {/* IMAGE CONTAINER */}
+      <div className="bg-gray-50 h-[320px] flex items-center justify-center">
         <img
           src={product.image}
           alt={product.title}
-          className="h-[260px] mx-auto object-contain"
+          className="max-h-[260px] object-contain"
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400";
+          }}
         />
       </div>
 
-      {/* HEART */}
+      {/* LIKE BUTTON */}
       <button
         onClick={onLike}
         className={`absolute top-3 right-3 text-xl ${
@@ -20,8 +26,9 @@ export default function ProductCard({ product, isLiked, onLike }) {
         {isLiked ? "♥" : "♡"}
       </button>
 
-      <h3 className="mt-2 text-[13px] font-medium uppercase truncate">
-        PRODUCT NAME
+      {/* TEXT */}
+      <h3 className="mt-3 text-[13px] uppercase font-medium truncate">
+        {product.title}
       </h3>
 
       <p className="text-[11px] text-gray-400">
