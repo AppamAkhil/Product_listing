@@ -1,11 +1,11 @@
-// app/page.jsx
+import { Suspense } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ProductsClient from "../components/ProductsClient";
 import { fetchProducts } from "../lib/fetchProducts";
 
 export default async function Page() {
-  const products = await fetchProducts(); // SSR
+  const products = await fetchProducts();
 
   return (
     <>
@@ -18,7 +18,15 @@ export default async function Page() {
           </h1>
         </section>
 
-        <ProductsClient products={products} />
+        <Suspense fallback={<p className="text-center">Loading...</p>}>
+          {products.length === 0 ? (
+            <p className="text-center text-gray-500">
+              Products temporarily unavailable.
+            </p>
+          ) : (
+            <ProductsClient products={products} />
+          )}
+        </Suspense>
       </main>
 
       <Footer />
